@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niomi Samani | Software Engineer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* ========== FONT IMPORTS ========== */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #12121a;
+      --primary: #6366f1;
+      --primary-glow: rgba(99,102,241,0.4);
+      --accent: #22d3ee;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #1e1e2e;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ========== BACKGROUND EFFECTS ========== */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+    }
+
+    .gradient-orb {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: -1;
+      animation: float 20s ease-in-out infinite;
+    }
+    .orb-1 { background: var(--primary); top: -200px; left: -200px; }
+    .orb-2 { background: var(--accent); bottom: -200px; right: -200px; animation-delay: -10s; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(50px,50px) scale(1.1); }
+    }
+
+    /* ========== NAV ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .5rem 1rem;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 50px;
+      font-size: .85rem;
+      color: var(--primary);
+      animation: pulse 2s ease-in-out infinite;
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 var(--primary-glow); }
+      50% { box-shadow: 0 0 20px 5px transparent; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn {
+      padding: .875rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      transition: all .3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--primary-glow);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(99,102,241,0.1);
+    }
+
+    /* Stats */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: .85rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: .75rem;
+    }
+
+    .section-header p {
+      max-width: 500px;
+      margin: 0 auto;
+      color: var(--text-muted);
+    }
+    /* ========== SKILLS GRID ========== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 16px;
+      transition: .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 40px rgba(99,102,241,0.15);
+    }
+
+    .skill-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(34,211,238,0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .skill-tag, .skill-card span {
+      padding: .25rem .75rem;
+      background: rgba(99,102,241,0.1);
+      border-radius: 20px;
+      font-size: .75rem;
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* ========== EXPERIENCE TIMELINE ========== */
+    .timeline {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    .timeline-item {
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      left: -6px;
+      top: 0;
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: .3s;
+    }
+
+    .timeline-content:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .timeline-date {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+
+    .timeline-title {
+      font-size: 1.25rem;
+      margin-bottom: .25rem;
+    }
+
+    .timeline-company {
+      color: var(--text-muted);
+      font-size: .9rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-content ul {
+      list-style: none;
+      color: var(--text-muted);
+    }
+
+    .timeline-content li {
+      margin-bottom: .5rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .timeline-content li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ========== PROJECTS ========== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: .3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(99,102,241,0.2);
+    }
+
+    .project-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(34,211,238,0.05));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-body {
+      padding: 1.5rem;
+    }
+
+    .project-body p {
+      color: var(--text-muted);
+      font-size: .9rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-tech span {
+      padding: .25rem .75rem;
+      background: rgba(34,211,238,0.1);
+      border-radius: 4px;
+      font-size: .75rem;
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Contact */
+    .contact-content {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    
+    .contact-link:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+    }
+    
+    .contact-link i {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Scroll Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 6px; }
+      .timeline-dot { left: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-grid"></div>
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+
+  <nav>
+    <div class="logo">&lt;NS/&gt;</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#publications">Publications</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero" id="about">
+    <div>
+      <div class="hero-badge">
+        <i class="fas fa-medal"></i> Gold Medalist • CGPA 9.44/10
+      </div>
+
+      <h1>Hi, I'm <span>Niomi Samani</span></h1>
+
+      <p class="hero-subtitle">
+        Product-focused Software Engineer specializing in <strong>AI-driven systems, intelligent automation,
+        full-stack development, and data visualization</strong>. I build scalable, user-centered solutions that reduce friction,
+        enhance decision-making, and deliver measurable business impact.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="mailto:niomisamani.12a@gmail.com" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Get in Touch
+        </a>
+        <a href="https://github.com/niomisamani" target="_blank" class="btn btn-outline">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">25%</div>
+          <div class="stat-label">Screening Time Reduced</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">55%</div>
+          <div class="stat-label">Reporting Errors Cut</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">30%+</div>
+          <div class="stat-label">Stability Improved</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">95%</div>
+          <div class="stat-label">Satisfaction Score</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS SECTION ========== -->
+  <section id="skills">
+    <div class="section-header">
+      <h2>Technical Arsenal</h2>
+      <p>A multi-disciplinary skillset blending AI, engineering, analytics & product design</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">💻</div>
+        <h3>Programming & Frameworks</h3>
+        <div class="skill-tags">
+          <span>Python</span><span>JavaScript</span><span>PHP</span><span>R</span><span>SQL</span>
+          <span>Django</span><span>Flask</span><span>Next.js</span><span>React</span>
+          <span>Tailwind</span><span>WordPress</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <h3>AI / ML & Automation</h3>
+        <div class="skill-tags">
+          <span>ChatGPT</span><span>Deepseek</span><span>Claude</span><span>Gemini</span>
+          <span>LangChain</span><span>Pinecone</span><span>RAG Pipelines</span>
+          <span>n8n</span><span>Python ML Libraries</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Data & Visualization</h3>
+        <div class="skill-tags">
+          <span>Power BI</span><span>Tableau</span><span>Pandas</span><span>MySQL</span>
+          <span>MongoDB</span><span>Excel</span><span>Google Sheets</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-icon">☁️</div>
+        <h3>Cloud, DevOps & PM</h3>
+        <div class="skill-tags">
+          <span>Azure</span><span>GCP</span><span>Git/GitHub</span>
+          <span>CI/CD</span><span>Agile</span><span>PLM</span><span>Cron Automation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE SECTION ========== -->
+  <section id="experience">
+    <div class="section-header">
+      <h2>Experience</h2>
+      <p>Where I’ve delivered impact and grown as an engineer & product professional</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- INDITECH -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">Apr 2024 – Present</div>
+          <h3 class="timeline-title">Web AI Applications Engineer</h3>
+          <p class="timeline-company">Inditech Health Solutions</p>
+          <ul>
+            <li>Built AI-powered doctor screening & automation tools (DIAP, ESAPA), reducing diagnostic time by <strong>25%</strong>.</li>
+            <li>Integrated ChatGPT, Deepseek & Azure OpenAI into production workflows to accelerate decision-making.</li>
+            <li>Developed <strong>10+ Power BI dashboards</strong> linked to MySQL, cutting reporting errors by <strong>55%</strong>.</li>
+            <li>Engineered an intelligent CME agentic system across <strong>7000+ PDFs</strong> & <strong>300+ topics</strong>.</li>
+            <li>Resolved <strong>20+ major bugs</strong>, boosting platform stability by <strong>30%+</strong>.</li>
+            <li>Automated recurring tasks via cron & n8n, reducing manual effort by <strong>25%</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RANCHOLABS -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">May 2024 – Jul 2024, Apr 2025 – May 2025</div>
+          <h3 class="timeline-title">Python AI Instructor</h3>
+          <p class="timeline-company">RanchoLabs</p>
+          <ul>
+            <li>Taught Python & ML (Regression, KNN, SVM) to <strong>25+ students</strong>.</li>
+            <li>Led <strong>5+ hands-on coding labs</strong>, improving conceptual & practical ML understanding.</li>
+            <li>Mentored <strong>15+ learners</strong>, boosting coding proficiency by <strong>60%</strong> (95% satisfaction).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CYBEORG -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">May 2023 – Sep 2023</div>
+          <h3 class="timeline-title">Python Instructor Intern</h3>
+          <p class="timeline-company">Cybeorg – GEMA</p>
+          <ul>
+            <li>Delivered <strong>40+ Python fundamentals lessons</strong>, increasing student engagement by 40%.</li>
+            <li>Built <strong>20+ structured exercises</strong> with 85% assignment completion.</li>
+            <li>Achieved <strong>95% satisfaction score</strong> for clarity & real-world examples.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS SECTION ========== -->
+  <section id="projects">
+    <div class="section-header">
+      <h2>Featured Projects</h2>
+      <p>Products, dashboards & intelligent systems I’ve built</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Medical Chatbot -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🏥</div>
+          <h3>End-to-End Medical Chatbot</h3>
+        </div>
+        <div class="project-body">
+          <p>AI-powered medical assistant using Gemini NLU, Pinecone vector search & LangChain RAG pipelines.
+             Delivers context-aware, safe responses for symptom-based queries.</p>
+          <div class="project-tech">
+            <span>Python</span><span>Flask</span><span>Pinecone</span><span>LangChain</span><span>Gemini</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finance Manager -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">💰</div>
+          <h3>Personal Finance Manager</h3>
+        </div>
+        <div class="project-body">
+          <p>AI-driven budgeting & investment simulation tool with 95% accuracy for FD, SIP & PPF forecasting.
+             Tracks transactions & generates visual insights using Plotly.</p>
+          <div class="project-tech">
+            <span>JavaScript</span><span>Flask</span><span>MySQL</span><span>Python</span><span>Plotly</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Platform -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">📝</div>
+          <h3>Full-Stack Blog Platform</h3>
+        </div>
+        <div class="project-body">
+          <p>Next.js-powered blog with SSR, Google OAuth, theme switching & Prisma ORM for scalable CRUD architecture.</p>
+          <div class="project-tech">
+            <span>Next.js</span><span>MongoDB</span><span>Prisma</span><span>Google OAuth</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smart City -->
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🏙️</div>
+          <h3>Smart City Data Analysis</h3>
+        </div>
+        <div class="project-body">
+          <p>Power BI dashboard analyzing 5+ urban metrics including AQI, traffic & energy consumption.
+             Based on 250+ rows from government portals.</p>
+          <div class="project-tech">
+            <span>Power BI</span><span>Excel</span><span>Google Sheets</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+    <!-- ========== PUBLICATIONS SECTION ========== -->
+    <section id="publications">
+        <div class="section-header">
+          <h2>Publications</h2>
+          <p>Research contributions published in books and academic volumes</p>
+        </div>
+    
+        <div class="projects-grid">
+    
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">📘</div>
+              <h3>InvestoAI — AI-Based Investment Recommendation System</h3>
+            </div>
+            <div class="project-body">
+              <p>Published in <strong>Artificial Intelligence Enabled Businesses</strong>.  
+                 Explores personalized portfolio modeling using AI-driven recommendation engines.</p>
+              <p><strong>ISBN:</strong> 9781394233977</p>
+            </div>
+          </div>
+    
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🎓</div>
+              <h3>Evolving Educational Trends</h3>
+            </div>
+            <div class="project-body">
+              <p>Published in <strong>Empowering Minds, Shaping Futures: Viksit Bharat’s Educational Revolution @2047</strong>.  
+                 A research chapter studying the shift from traditional Gurukul systems to modern digital learning.</p>
+              <p><strong>ISBN:</strong> 978-93-90856-71-8</p>
+            </div>
+          </div>
+    
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">📡</div>
+              <h3>RFID & Authentication-Based Intelligent Parking</h3>
+            </div>
+            <div class="project-body">
+              <p>Published in the book <strong>Green Computing for Sustainable Smart Cities</strong>, CRC Press.  
+                 A complete IoT-based smart parking authentication system using RFID and mobile applications.</p>
+              <p><strong>ISBN:</strong> 97810003388814</p>
+            </div>
+          </div>
+    
+        </div>
+      </section>
+    
+      <!-- ========== CERTIFICATIONS SECTION ========== -->
+      <section id="certifications">
+        <div class="section-header">
+          <h2>Certifications</h2>
+          <p>Courses, professional credentials & technical upskilling</p>
+        </div>
+    
+        <div class="skills-grid">
+    
+          <div class="skill-card">
+            <div class="skill-icon">🎓</div>
+            <h3>Programming & Software</h3>
+            <ul class="timeline-content">
+              <li>Learning Python — LinkedIn Learning (2020)</li>
+              <li>Java Programming & Software Engineering Fundamentals — Duke University (Coursera)</li>
+              <li>HTML, CSS, JavaScript for Web Developers — Coursera</li>
+            </ul>
+          </div>
+    
+          <div class="skill-card">
+            <div class="skill-icon">📊</div>
+            <h3>Data & Analytics</h3>
+            <ul class="timeline-content">
+              <li>NPTEL — Foundations of R Software</li>
+              <li>NPTEL — Ethics in Engineering Practice</li>
+            </ul>
+          </div>
+    
+          <div class="skill-card">
+            <div class="skill-icon">🤖</div>
+            <h3>AI / Automation</h3>
+            <ul class="timeline-content">
+              <li>Figma for Real-World UX</li>
+              <li>n8n Workflow Automation Basics</li>
+            </ul>
+          </div>
+    
+        </div>
+      </section>
+    
+      <!-- ========== EXTRA BI / TABLEAU PROJECTS SECTION ========== -->
+      <section id="extra-projects">
+        <div class="section-header">
+          <h2>Analytics & Visualization Projects</h2>
+          <p>Dashboards & data analysis reports across Smart Cities, AQI & Sales</p>
+        </div>
+    
+        <div class="projects-grid">
+    
+          <!-- Smart City Data Analysis -->
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🏙️</div>
+              <h3>Smart City Data Analysis (Power BI)</h3>
+            </div>
+            <div class="project-body">
+              <p>Interactive dashboard visualizing 5+ urban metrics — AQI, traffic, utilities & energy usage.  
+                 Based on 250+ rows of government-sourced data.</p>
+              <p><strong>Duration:</strong> July 2024 – October 2024</p>
+              <p><a style="color: var(--accent);" target="_blank" href="https://drive.google.com/file/d/1d8NLPwPttVEMa2juCtoH3OYXOjdYInJS/view">View Project</a></p>
+            </div>
+          </div>
+    
+          <!-- AQI Tableau Project -->
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">🌫️</div>
+              <h3>AQI Analysis Dashboard (Tableau)</h3>
+            </div>
+            <div class="project-body">
+              <p>Tracks AQI patterns across 5+ major cities over 5 years.  
+                 Found a <strong>15% correlation</strong> between pollution levels & increased health complications.</p>
+              <p><strong>Duration:</strong> November 2023</p>
+              <p><a style="color: var(--accent);" target="_blank" href="https://drive.google.com/file/d/1LE1i2i8Z8xlppvmZDOlP6oV3Xt4VpWQb/view">View Project</a></p>
+            </div>
+          </div>
+    
+          <!-- Sales Dashboard -->
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-icon">📈</div>
+              <h3>Salesbook DVLAB Analysis (Tableau)</h3>
+            </div>
+            <div class="project-body">
+              <p>Dashboard analyzing performance across 5+ product categories & 10+ regions, uncovering key business KPIs.</p>
+              <p><strong>Duration:</strong> September 2023 – October 2023</p>
+              <p><a style="color: var(--accent);" target="_blank" href="https://drive.google.com/file/d/1mMwcJrd8G_WoXfv9cIzVzpkImFeVO1en/view">View Project</a></p>
+            </div>
+          </div>
+    
+        </div>
+      </section>
+    
+      <!-- ========== CONTACT SECTION ========== -->
+      <section id="contact">
+        <div class="section-header">
+          <h2>Let's Connect</h2>
+          <p>Open to opportunities in AI Engineering, Full-Stack, Data, Product & Research</p>
+        </div>
+    
+        <div class="contact-content">
+          <div class="contact-links">
+    
+            <a class="contact-link" href="mailto:niomisamani.12a@gmail.com">
+              <i class="fas fa-envelope"></i>
+              <span>niomisamani.12a@gmail.com</span>
+            </a>
+    
+            <a class="contact-link" href="https://linkedin.com/in/niomi-s-27b7061b0/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+              <span>LinkedIn</span>
+            </a>
+    
+            <a class="contact-link" href="https://github.com/niomisamani" target="_blank">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+            </a>
+    
+          </div>
+        </div>
+      </section>
+    
+      <!-- ========== FOOTER ========== -->
+      <footer>
+        <p>Designed & Built by Niomi Samani © 2025</p>
+      </footer>
+    
+      <!-- ========== JAVASCRIPT ========== -->
+      <script>
+        // Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+          reveals.forEach(el => {
+            const top = el.getBoundingClientRect().top;
+            if (top < window.innerHeight - 100) el.classList.add('active');
+          });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+    
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+          a.addEventListener('click', function(e){
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: "smooth" });
+          });
+        });
+      </script>
+    
+    </body>
+    </html>
+    
