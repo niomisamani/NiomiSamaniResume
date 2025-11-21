@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niomi Samani | Software Engineer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #12121a;
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.4);
+      --accent: #22d3ee;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #1e1e2e;
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Animated Background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+    }
+    
+    .gradient-orb {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: -1;
+      animation: float 20s ease-in-out infinite;
+    }
+    
+    .orb-1 { background: var(--primary); top: -200px; left: -200px; }
+    .orb-2 { background: var(--accent); bottom: -200px; right: -200px; animation-delay: -10s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(50px, 50px) scale(1.1); }
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links { display: flex; gap: 2rem; }
+    
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+    
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 900px;
+      text-align: center;
+      animation: fadeUp 1s ease-out;
+    }
+    
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--primary-glow); }
+      50% { box-shadow: 0 0 20px 5px transparent; }
+    }
+    
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      text-align: center;
+      animation: fadeUp 1s ease-out backwards;
+    }
+    
+    .stat:nth-child(1) { animation-delay: 0.2s; }
+    .stat:nth-child(2) { animation-delay: 0.4s; }
+    .stat:nth-child(3) { animation-delay: 0.6s; }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 0.875rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--primary-glow);
+    }
+    
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+    
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+    
+    /* Sections */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .section-header p {
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
+    }
+    
+    .skill-card:hover::before { transform: scaleX(1); }
+    
+    .skill-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(34, 211, 238, 0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .skill-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .skill-tag {
+      padding: 0.25rem 0.75rem;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+    }
+    
+    /* Experience */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    
+    .timeline-item {
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+    
+    .timeline-dot {
+      position: absolute;
+      left: -6px;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+    
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+    
+    .timeline-content:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+    }
+    
+    .timeline-date {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .timeline-company {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .timeline-content ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    .timeline-content li {
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-content li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s;
+      position: relative;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+    }
+    
+    .project-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(34, 211, 238, 0.05));
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .project-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .project-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-body {
+      padding: 1.5rem;
+    }
+    
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .project-tech span {
+      padding: 0.25rem 0.75rem;
+      background: rgba(34, 211, 238, 0.1);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+    }
+    
+    /* Contact */
+    .contact-content {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+    }
+    
+    .contact-link:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+    }
+    
+    .contact-link i {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Scroll Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 6px; }
+      .timeline-dot { left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  
+  <nav>
+    <div class="logo">&lt;NS/&gt;</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+  
+  <section class="hero" id="about">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-medal"></i> Gold Medalist • CGPA 9.44/10
+      </div>
+      <h1>Hi, I'm <span>Niomi Samani</span></h1>
+      <p class="hero-subtitle">Product-focused Software Engineer building AI-driven solutions that reduce friction and enhance decision-making. Passionate about clean code, scalable architectures, and intuitive user experiences.</p>
+      <div class="cta-buttons">
+        <a href="mailto:niomisamani.12a@gmail.com" class="btn btn-primary">
+          <i class="fas fa-envelope"></i> Get in Touch
+        </a>
+        <a href="https://github.com/niomisamani" target="_blank" class="btn btn-outline">
+          <i class="fab fa-github"></i> View GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">25%</div>
+          <div class="stat-label">Screening Time Reduced</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">55%</div>
+          <div class="stat-label">Reporting Errors Cut</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">30%+</div>
+          <div class="stat-label">Stability Improved</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="skills">
+    <div class="section-header reveal">
+      <h2>Technical Arsenal</h2>
+      <p>Tools and technologies I use to bring ideas to life</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon">💻</div>
+        <h3>Languages & Frameworks</h3>
+        <div class="skill-tags">
+          <span>Python</span><span>JavaScript</span><span>PHP</span><span>SQL</span>
+          <span>Django</span><span>Flask</span><span>Next.js</span><span>React</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <h3>AI / LLM Stack</h3>
+        <div class="skill-tags">
+          <span>ChatGPT</span><span>Gemini</span><span>Claude</span><span>Deepseek</span>
+          <span>LangChain</span><span>Pinecone</span><span>RAG</span><span>Azure OpenAI</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">📊</div>
+        <h3>Data & Visualization</h3>
+        <div class="skill-tags">
+          <span>Power BI</span><span>Pandas</span><span>MySQL</span>
+          <span>MongoDB</span><span>Prisma</span><span>Plotly</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">☁️</div>
+        <h3>Cloud & DevOps</h3>
+        <div class="skill-tags">
+          <span>Azure</span><span>GCP</span><span>Git/GitHub</span>
+          <span>CI/CD</span><span>n8n</span><span>Cron</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="experience">
+    <div class="section-header reveal">
+      <h2>Experience</h2>
+      <p>Where I've contributed and grown</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">Apr 2024 – Present</div>
+          <h3 class="timeline-title">Web AI Applications Engineer</h3>
+          <p class="timeline-company">Inditech Health Solutions</p>
+          <ul>
+            <li>Built AI-driven doctor-screening and clinical automation tools (DIAP, ESAPA), reducing screening time by 25%</li>
+            <li>Integrated LLM capabilities (ChatGPT, Deepseek, Azure OpenAI) into production workflows</li>
+            <li>Developed 10+ Power BI dashboards linked to MySQL, cutting reporting errors by 55%</li>
+            <li>Created AI-driven agentic system for interactive CME across 7000+ PDFs and 300+ Topics</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">May 2024 – Jul 2024 & Apr 2025 – May 2025</div>
+          <h3 class="timeline-title">Python AI Instructor</h3>
+          <p class="timeline-company">RanchoLabs</p>
+          <ul>
+            <li>Delivered Python and ML curriculum (Regression, KNN, SVM) to 25+ students</li>
+            <li>Led 5+ interactive coding sessions improving ML workflow understanding</li>
+            <li>Mentored 15+ learners, boosting practical coding ability by 60%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-date">May 2023 – Sep 2023</div>
+          <h3 class="timeline-title">Python Instructor Intern</h3>
+          <p class="timeline-company">Cybeorg – GEMA</p>
+          <ul>
+            <li>Delivered 40+ lessons on Python fundamentals, increasing engagement by 40%</li>
+            <li>Created 20+ practical exercises with 85% completion rate</li>
+            <li>Achieved 95% student satisfaction score</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="projects">
+    <div class="section-header reveal">
+      <h2>Featured Projects</h2>
+      <p>Some things I've built</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🏥</div>
+          <h3>End-to-End Medical Chatbot</h3>
+        </div>
+        <div class="project-body">
+          <p>AI-powered medical chatbot using Gemini for NLU and Pinecone for vector-based retrieval. Implemented RAG pipeline with LangChain for accurate, context-aware medical responses.</p>
+          <div class="project-tech">
+            <span>Python</span><span>Flask</span><span>Pinecone</span><span>LangChain</span><span>HuggingFace</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">💰</div>
+          <h3>Personal Finance Manager</h3>
+        </div>
+        <div class="project-body">
+          <p>Budget tracker with spending alerts, AI-driven investment simulator with 95% accuracy for FDs, SIPs, and PPF. Logs 20+ monthly transactions with detailed reports.</p>
+          <div class="project-tech">
+            <span>JavaScript</span><span>Flask</span><span>MySQL</span><span>Plotly</span><span>Python</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">📝</div>
+          <h3>Full-Stack Blog Platform</h3>
+        </div>
+        <div class="project-body">
+          <p>Responsive blog platform with SSR for optimal performance and SEO. Features Google OAuth 2.0, theme toggling, and Prisma ORM with MongoDB for scalable CRUD operations.</p>
+          <div class="project-tech">
+            <span>Next.js</span><span>Prisma</span><span>MongoDB</span><span>Google OAuth</span><span>React</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon">🏙️</div>
+          <h3>Smart City Data Analysis</h3>
+        </div>
+        <div class="project-body">
+          <p>Interactive Power BI dashboard visualizing 5+ key urban metrics including traffic, pollution, and energy consumption. Analyzed 250+ rows from government portals.</p>
+          <div class="project-tech">
+            <span>Power BI</span><span>Excel</span><span>Google Sheets</span><span>Data Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact">
+    <div class="section-header reveal">
+      <h2>Let's Connect</h2>
+      <p>I'm always open to discussing new projects and opportunities</p>
+    </div>
+    <div class="contact-content reveal">
+      <div class="contact-links">
+        <a href="mailto:niomisamani.12a@gmail.com" class="contact-link">
+          <i class="fas fa-envelope"></i>
+          <span>niomisamani.12a@gmail.com</span>
+        </a>
+        <a href="https://linkedin.com/in/niomi-s-27b7061b0/" target="_blank" class="contact-link">
+          <i class="fab fa-linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/niomisamani" target="_blank" class="contact-link">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <!-- <a href="tel:9429633099" class="contact-link">
+          <i class="fas fa-phone"></i>
+          <span>9429633099</span>
+        </a> -->
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <p>Designed & Built by Niomi Samani © 2025</p>
+  </footer>
+  
+  <script>
+    // Scroll Reveal Animation
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+    
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
